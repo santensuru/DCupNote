@@ -66,6 +66,7 @@ namespace DCupNote
         {
             pictureBox1.Image = null;
             saveAsToolStripMenuItem.Visible = false;
+
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)

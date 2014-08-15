@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,15 +13,20 @@ namespace DCupNote
 {
     public partial class MainForm : Form
     {
-        private int startX;
-        private int startY;
-        private int endX;
-        private int endY;
+        class Line
+        {
+            public Point Start { get; set; }
+            public Point End { get; set; }
+        }
+
+        private Stack<Line> lines = new Stack<Line>();
 
         public MainForm()
         {
             InitializeComponent();
             SetLayout();
+            Dock = DockStyle.Fill;
+            DoubleBuffered = true;
         }
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
@@ -47,28 +53,40 @@ namespace DCupNote
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            //MessageBox.Show(e.X.ToString() + "  " + e.Y.ToString(), "Down");
-            startX = e.X;
-            startY = e.Y;
+            lines.Push(new Line { Start = e.Location });
         }
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
-            //MessageBox.Show(e.X.ToString() + "  " + e.Y.ToString(), "Up");
-            endX = e.X;
-            endY = e.Y;
+            foreach (var line in lines)
+            {
+                Graphics gObject = pictureBox1.CreateGraphics();
+                gObject.DrawLine(Pens.Black, line.Start, line.End);
+            }
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            //Pen pen = new Pen(Color.FromArgb(0, 0, 0, 0));
-            //e.Graphics.DrawLine(pen, startX, startY, endX, endY);
-            //MessageBox.Show(startX.ToString() + startY.ToString() + endX.ToString() + endY.ToString());
+            foreach (var line in lines)
+            {
+                e.Graphics.DrawLine(Pens.Black, line.Start, line.End);
+            }
         }
 
-        
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (lines.Count > 0 && e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                pictureBox1.Invalidate();
+                lines.Peek().End = e.Location;
+                foreach (var line in lines)
+                {
+                    Graphics gObject = pictureBox1.CreateGraphics();
+                    gObject.DrawLine(Pens.Black, line.Start, line.End);
+                }
 
-        
+            }
+        }
 
     }
 }
