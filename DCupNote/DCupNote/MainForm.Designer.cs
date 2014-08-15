@@ -34,9 +34,9 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.noteFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -88,16 +88,6 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Location = new System.Drawing.Point(474, 30);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 476);
-            this.panel1.TabIndex = 1;
-            // 
             // panel2
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -124,14 +114,30 @@
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
             // 
+            // noteFlowLayoutPanel
+            // 
+            this.noteFlowLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.noteFlowLayoutPanel.AutoScroll = true;
+            this.noteFlowLayoutPanel.HorizontalScroll.Visible = false;
+            this.noteFlowLayoutPanel.BackColor = System.Drawing.Color.White;
+            this.noteFlowLayoutPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.noteFlowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.noteFlowLayoutPanel.Location = new System.Drawing.Point(472, 30);
+            this.noteFlowLayoutPanel.Name = "noteFlowLayoutPanel";
+            this.noteFlowLayoutPanel.Padding = new System.Windows.Forms.Padding(2);
+            this.noteFlowLayoutPanel.Size = new System.Drawing.Size(202, 476);
+            this.noteFlowLayoutPanel.TabIndex = 4;
+            this.noteFlowLayoutPanel.WrapContents = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(686, 518);
+            this.Controls.Add(this.noteFlowLayoutPanel);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
@@ -154,9 +160,9 @@
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.FlowLayoutPanel noteFlowLayoutPanel;
     }
 }
 
