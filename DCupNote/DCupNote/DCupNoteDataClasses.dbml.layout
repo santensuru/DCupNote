@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="DCupNoteDataClasses">
+  <DataContextMoniker Name="/DCupNoteDataClassesDataContext" />
+  <nestedChildShapes>
+    <classShape Id="2ce01c1b-cec5-4d89-af21-7ddb17ec1331" absoluteBounds="0.5, 0.5, 1.75, 1.5785953776041666">
+      <DataClassMoniker Name="/DCupNoteDataClassesDataContext/DCupNote" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d33a4a96-5cdc-4310-b0e8-c7d04973f27d" absoluteBounds="0.515, 0.96, 1.7200000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="280c6bcd-c8d8-4e25-9e5d-4edcbe445146" absoluteBounds="3.125, 0.5, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/DCupNoteDataClassesDataContext/TagNote" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e25f161c-d26b-48ac-8ef0-78a3a6c0f941" absoluteBounds="3.1399999999999997, 0.96, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.25 : 1.28929768880208); (3.125 : 1.28929768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DCupNoteDataClassesDataContext/DCupNote/DCupNote_TagNote" />
+      <nodes>
+        <classShapeMoniker Id="2ce01c1b-cec5-4d89-af21-7ddb17ec1331" />
+        <classShapeMoniker Id="280c6bcd-c8d8-4e25-9e5d-4edcbe445146" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

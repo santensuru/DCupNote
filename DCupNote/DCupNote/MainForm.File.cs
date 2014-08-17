@@ -14,29 +14,28 @@ namespace DCupNote
 {
     partial class MainForm
     {
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "jpg (*.jpg)|*.jpg|bmp (*.bmp)|*.bmp|png (*.png)|*.png";
-
-            if (ofd.ShowDialog() == DialogResult.OK && !String.IsNullOrWhiteSpace(ofd.FileName))
+            CreateNew form = new CreateNew();
+            if (form.ShowDialog() == DialogResult.OK)
             {
-                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+                DDC.DCupNotes.InsertOnSubmit(form.GetDCupNote());
+                DDC.SubmitChanges();
 
-                using (var nya = new System.IO.FileStream(ofd.FileName.ToString(), System.IO.FileMode.Open))
-                {
-                    var bmp = new Bitmap(nya);
-                    pictureBox1.Image = (Bitmap)bmp.Clone() as Bitmap;
-                    bmp.Dispose();
-                    nya.Dispose();
-                }
-
-                pictureBox1.Visible = true;
-                saveAsToolStripMenuItem.Visible = true;
+                SetAfterNewOrOpen(form.GetDCupNote().ID_DCupNote);
             }
         }
 
-        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ViewLibraryDCN form = new ViewLibraryDCN(DDC);
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                SetAfterNewOrOpen(form.GetDCupNote().ID_DCupNote);
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Filter = "jpg (*.jpg)|*.jpg|bmp (*.bmp)|*.bmp|png (*.png)|*.png";
@@ -65,7 +64,8 @@ namespace DCupNote
         private void clearToolStripMenuItem_Click(object sender, EventArgs e)
         {
             pictureBox1.Image = null;
-            saveAsToolStripMenuItem.Visible = false;
+            gObject = null;
+            saveToolStripMenuItem.Visible = false;
 
         }
 

@@ -13,20 +13,24 @@ namespace DCupNote
 {
     public partial class MainForm : Form
     {
+        DCupNoteDataClassesDataContext DDC;
+
         class Line
         {
             public Point Start { get; set; }
             public Point End { get; set; }
         }
 
+        private Graphics gObject;
         private Stack<Line> lines = new Stack<Line>();
 
         public MainForm()
         {
             InitializeComponent();
             SetLayout();
-            Dock = DockStyle.Fill;
-            DoubleBuffered = true;
+            DDC = new DCupNoteDataClassesDataContext();
+            //Dock = DockStyle.Fill;
+            //DoubleBuffered = true;
         }
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
@@ -60,17 +64,17 @@ namespace DCupNote
         {
             foreach (var line in lines)
             {
-                Graphics gObject = pictureBox1.CreateGraphics();
+                gObject = pictureBox1.CreateGraphics();
                 gObject.DrawLine(Pens.Black, line.Start, line.End);
             }
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            foreach (var line in lines)
-            {
-                e.Graphics.DrawLine(Pens.Black, line.Start, line.End);
-            }
+            //foreach (var line in lines)
+            //{
+            //    e.Graphics.DrawLine(Pens.Black, line.Start, line.End);
+            //}
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
@@ -81,12 +85,14 @@ namespace DCupNote
                 lines.Peek().End = e.Location;
                 foreach (var line in lines)
                 {
-                    Graphics gObject = pictureBox1.CreateGraphics();
+                    gObject = pictureBox1.CreateGraphics();
                     gObject.DrawLine(Pens.Black, line.Start, line.End);
                 }
 
             }
         }
+
+        
 
     }
 }

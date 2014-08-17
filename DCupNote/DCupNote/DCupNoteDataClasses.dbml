@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DCupNoteDB" Class="DCupNoteDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\DCupNoteDB.mdf;Integrated Security=True;Connect Timeout=30" SettingsObjectName="DCupNote.Properties.Settings" SettingsPropertyName="DCupNoteDBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.DCupNote" Member="DCupNotes">
+    <Type Name="DCupNote">
+      <Column Name="ID_DCupNote" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Notes_DCN" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Image" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="DCupNote_TagNote" Member="TagNotes" ThisKey="ID_DCupNote" OtherKey="ID_DCupNote" Type="TagNote" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TagNote" Member="TagNotes">
+    <Type Name="TagNote">
+      <Column Name="ID_TagNote" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ID_DCupNote" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LocationX" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LocationY" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Notes_TN" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="DCupNote_TagNote" Member="DCupNote" ThisKey="ID_DCupNote" OtherKey="ID_DCupNote" Type="DCupNote" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

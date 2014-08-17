@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,33 @@ namespace DCupNote
 {
     partial class MainForm
     {
+        private void SetAfterNewOrOpen(string id_dcupnote)
+        {
+            try
+            {
+                DCupNote dcnOpen = (from dcn in DDC.DCupNotes
+                                    where dcn.ID_DCupNote == id_dcupnote
+                                    select dcn).FirstOrDefault();
+
+                if (dcnOpen.Image != null)
+                {
+                    pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+                    pictureBox1.Image = ByteArrayToImage(dcnOpen.Image.ToArray());
+                    saveToolStripMenuItem.Visible = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public Image ByteArrayToImage(byte[] bArray)
+        {
+            var Stream = new MemoryStream(bArray);
+            return Image.FromStream(Stream);
+        }
+
         private void SetLayout()
         {
             //panel2.Width = pictureBox1.Width = (int)(this.Width - 22) * 7 / 10;
