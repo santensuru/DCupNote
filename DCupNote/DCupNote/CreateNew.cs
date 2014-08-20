@@ -22,6 +22,7 @@ namespace DCupNote
         {
             InitializeComponent();
             _dcn = null;
+            setID();
         }
 
         public DCupNote GetDCupNote()
@@ -127,21 +128,12 @@ namespace DCupNote
             }
         }
 
-        private void defaultBtn_Click(object sender, EventArgs e)
+        private void setID()
         {
-            if (String.IsNullOrWhiteSpace(titleTB.Text))
-            {
-                MessageBox.Show("Please fill the Title first, please.", "Warning",
-                    MessageBoxButtons.OK, MessageBoxIcon.None);
-            }
-            else
-            {
-                DateTime date = DateTime.Today;
-                idTB.Text = titleTB.Text + date.ToLongDateString();
-                idTB.Text = idTB.Text.Replace(" ", "");
-            }
+            DateTime date = DateTime.Now;
+            idTB.Text = "DCN" + date.ToShortDateString() + "_" + date.ToLongTimeString();
+            idTB.Text = idTB.Text.Replace("/", "-");
+            idTB.Text = idTB.Text.Replace(":", "-");
         }
-
-
     }
 }

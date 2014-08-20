@@ -11,11 +11,13 @@ namespace DCupNote
 {
     partial class MainForm
     {
+        private DCupNote dcnOpen;
+
         private void SetAfterNewOrOpen(string id_dcupnote)
         {
             try
             {
-                DCupNote dcnOpen = (from dcn in DDC.DCupNotes
+                dcnOpen = (from dcn in DDC.DCupNotes
                                     where dcn.ID_DCupNote == id_dcupnote
                                     select dcn).FirstOrDefault();
 
@@ -23,12 +25,68 @@ namespace DCupNote
                 {
                     pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
                     pictureBox1.Image = ByteArrayToImage(dcnOpen.Image.ToArray());
-                    saveToolStripMenuItem.Visible = true;
                 }
+
+                editBtn.Enabled = true;
+                titleTB.Text = dcnOpen.Title;
+                notesTB.Text = dcnOpen.Notes_DCN;
+
+                UpdateNotesFLP();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void UpdateNotesFLP()
+        {
+            List<TagNote> ListTN = (from tn in DDC.TagNotes
+                                    where tn.ID_DCupNote == dcnOpen.ID_DCupNote
+                                    select tn).ToList();
+
+            noteFlowLayoutPanel.Controls.Clear();
+            foreach (TagNote TN in ListTN)
+            {
+                FlowLayoutPanel newPanel = new FlowLayoutPanel();
+                FlowLayoutPanel newPanel2 = new FlowLayoutPanel();
+                Label location = new Label();
+                TextBox noteTB = new TextBox();
+                Button delBtn = new Button();
+
+                noteTB.Size = new System.Drawing.Size(noteFlowLayoutPanel.Width - 50, 20);
+                noteTB.Multiline = true;
+                noteTB.Text = TN.Notes_TN;
+                noteTB.TextChanged += new System.EventHandler(noteTB_TextChanged);
+                noteTB.Name = TN.ID_TagNote;
+
+                location.Text = "( " + TN.LocationX.ToString() + "," + TN.LocationY.ToString() + " )";
+                location.Margin = new System.Windows.Forms.Padding(0, 5, 0, 0);
+                location.Size = new System.Drawing.Size(noteFlowLayoutPanel.Width - 73, 23);
+
+                delBtn.Text = "X";
+                delBtn.FlatStyle = FlatStyle.Popup;
+                delBtn.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                delBtn.ForeColor = Color.Red;
+                delBtn.Margin = new System.Windows.Forms.Padding(0);
+                delBtn.Size = new System.Drawing.Size(23, 23);
+                delBtn.Click += new System.EventHandler(delBtn_Click);
+                delBtn.Name = TN.ID_TagNote;
+
+                newPanel2.Size = new System.Drawing.Size(noteFlowLayoutPanel.Width - 50, 23);
+                newPanel2.FlowDirection = FlowDirection.LeftToRight;
+
+                newPanel2.Controls.Add(location);
+                newPanel2.Controls.Add(delBtn);
+
+                newPanel.AutoSize = true;
+                newPanel.FlowDirection = FlowDirection.TopDown;
+                newPanel.Padding = new System.Windows.Forms.Padding(5, 0, 5, 5);
+
+                newPanel.Controls.Add(newPanel2);
+                newPanel.Controls.Add(noteTB);
+                newPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+                noteFlowLayoutPanel.Controls.Add(newPanel);
             }
         }
 
@@ -54,57 +112,6 @@ namespace DCupNote
             SetLayout();
         }
 
-        ////...
-        //private Image lastImage;
-        //private Brush eraserBrush;
-        ////...
-
-        //// your standard paint method
-        //private void My_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
-        //{
-        //    if (something_has_changed_like_the_form_has_been_resi zed)
-        //    {
-        //        // we may need to redraw everything...
-        //        Rectangle rect = this.GetDrawingRectangle();
-        //        this.lastImage = new Bitmap(rect.Width, rect.Height);
-        //        Graphics gx = Graphics.FromImage(this.lastImage);
-        //        gx.Clear(this.BackColor);
-
-        //        // draw the normal, erased state
-        //        // ...
-        //        // draw all of the elements that should be drawn...
-        //        gx.Dispose();
-        //        this.eraserBrush = new TextureBrush(this.lastImage);
-        //    }
-
-        //    // all of our lines, pictures, etc. are already stored
-        //    // inside lastImage, so we don't need to do anything here.
-
-        //    // let's say we kept track of some coordinates for a line,
-        //    // and also kept track of whether or not we need to do
-        //    // some erasing
-        //    if (bLineNeedsErasing)
-        //    {
-        //        // by drawing to this Graphics object, we're updating the
-        //        // bitmap image.
-        //        Graphics imageGraphics = Graphics.FromImage(this.lastImage);
-
-        //        // assuming the first line was drawn with a width of 1 (float)
-        //        Pen p = new Pen(this.eraserBrush, 1F);
-
-        //        // assuming we kept track of a couple System.Drawing.PointF
-        //        // points representing the ends of the line
-        //        imageGraphics.DrawLine(p, this.linePoint1, this.linePoint2);
-        //        imageGraphics.Dispose();
-        //    }
-
-        //    Graphics g = e.Graphics;
-        //    g.DrawImageUnscaled(this.lastImage,0,0);
-        //    }
-
-            //this.SetStyle(ControlStyles.UserPaint, true);
-            //this.SetStyle(ControlStyles.DoubleBuffer, true);
-            //this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
 
     }
 }
